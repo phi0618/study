@@ -1,9 +1,11 @@
 package com.iusername.base;
 
-import android.content.Context;
 import android.view.View;
 
 import com.iusername.base.helper.ProtocolManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Click2Protocol implements View.OnClickListener {
     private String protocolUrl;
@@ -14,6 +16,8 @@ public class Click2Protocol implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        ProtocolManager.redirectProtocol(v.getContext(), protocolUrl);
+        Map<String,String> map =new HashMap<>();
+        map.put("name",protocolUrl);
+        ProtocolManager.redirectProtocol(v.getContext(), protocolUrl,map);
     }
 }

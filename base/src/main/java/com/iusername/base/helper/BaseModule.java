@@ -14,8 +14,6 @@ public abstract class BaseModule {
 
     public abstract Map<String, String> getHomeProtocols();
 
-    public abstract Intent redirectProtocol(Context context, String urlStr, HashMap<String, String> params);
-
-    public abstract void startActivity(Context ctx, String url);
+    public abstract Intent redirectProtocol(Context context, String urlStr);
 
 }

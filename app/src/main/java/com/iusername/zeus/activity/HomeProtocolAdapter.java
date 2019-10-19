@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.iusername.base.Click2Protocol;
 import com.iusername.base.utils.UnitUtils;
+import com.iusername.zeus.R;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class HomeProtocolAdapter extends RecyclerView.Adapter<HomeProtocolAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         TextView textView = new TextView(viewGroup.getContext());
         textView.setLayoutParams(new LinearLayout.LayoutParams(UnitUtils.dip2px(120), UnitUtils.dip2px(80)));
-        textView.setBackgroundColor(0xff2f4f2f);
+        textView.setBackgroundColor(viewGroup.getContext().getResources().getColor(R.color.colorPrimary));
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(0xffffffff);
         return new ViewHolder(textView);
@@ -37,7 +38,7 @@ public class HomeProtocolAdapter extends RecyclerView.Adapter<HomeProtocolAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Map.Entry<String, String> entry = getItemEntity(position);
         viewHolder.mTitleView.setText(entry.getKey());
-        viewHolder.mTitleView.setOnClickListener(new Click2Protocol("app://xxxx?a=xxx&b=xxx"));
+        viewHolder.mTitleView.setOnClickListener(new Click2Protocol(entry.getValue()));
     }
 
     private Map.Entry<String, String> getItemEntity(int position) {

@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.iusername.base.Click2Protocol;
 import com.iusername.base.base.ActivityBase;
 import com.iusername.base.helper.BaseModule;
 import com.iusername.base.helper.ModuleManager;
-import com.iusername.zeus.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +25,7 @@ public class MainActivity extends ActivityBase {
             mapList.addAll(value.getHomeProtocols().entrySet());
         }
         HomeProtocolAdapter adapter = new HomeProtocolAdapter(mapList);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(adapter);
     }
 

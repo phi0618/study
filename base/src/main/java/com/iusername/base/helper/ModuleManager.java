@@ -2,7 +2,7 @@ package com.iusername.base.helper;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
+import android.text.TextUtils;
 
 import com.iusername.base.utils.LogUtils;
 
@@ -33,7 +33,17 @@ public class ModuleManager {
     }
 
     static BaseModule getModuleByProtocol(String urlStr) {
-        return moduleMap.get(urlStr);
+        if (TextUtils.isEmpty(urlStr) || !urlStr.startsWith(Constant.PROTO_HEAD)) {
+            return null;
+        }
+
+        String sub2 = urlStr.substring(Constant.PROTO_HEAD.length());
+        int index = sub2.indexOf("/");
+        if (index >= 0) {
+            sub2 = sub2.substring(0, index);
+        }
+        sub2 = Constant.PROTO_HEAD + sub2;
+        return moduleMap.get(sub2);
     }
 
 
@@ -50,23 +60,25 @@ public class ModuleManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (dexFiles != null && !dexFiles.isEmpty()) {
-            for (DexFile df : dexFiles) {
-                LogUtils.defaultLog("dex result####:" + df.getName());
-                for (Enumeration<String> iter = df.entries(); iter.hasMoreElements(); ) {
-                    String className = iter.nextElement();
-                    if (className.endsWith("Module") && !className.endsWith("BaseModule")) {
-                        try {
-                            Class clazz = loader.loadClass(className);
-                            if (BaseModule.class.isAssignableFrom(clazz)) {
-                                LogUtils.defaultLog("找到 module####:" + className);
-                                BaseModule module = (BaseModule) clazz.newInstance();
-                                registerModule(module);
-                            }
-                        } catch (Exception e) {
-                            LogUtils.defaultLog(e);
-                        }
+        if (dexFiles == null || dexFiles.isEmpty()) {
+            return;
+        }
+        for (DexFile df : dexFiles) {
+            LogUtils.defaultLog("dex result####:" + df.getName());
+            for (Enumeration<String> iter = df.entries(); iter.hasMoreElements(); ) {
+                String className = iter.nextElement();
+                if (!className.endsWith("Module") || className.endsWith("BaseModule")) {
+                    continue;
+                }
+                try {
+                    Class clazz = loader.loadClass(className);
+                    if (BaseModule.class.isAssignableFrom(clazz)) {
+                        LogUtils.defaultLog("找到 module####:" + className);
+                        BaseModule module = (BaseModule) clazz.newInstance();
+                        registerModule(module);
                     }
+                } catch (Exception e) {
+                    LogUtils.defaultLog(e);
                 }
             }
         }
@@ -79,9 +91,8 @@ public class ModuleManager {
      * @throws IOException
      */
     public static ArrayList<DexFile> getAppDexFile(Context appCtx) throws IOException {
-        final ArrayList<DexFile> dexfile = new ArrayList<DexFile>();
+        final ArrayList<DexFile> dexfile = new ArrayList<>();
         boolean isOpt = false;
-        ApplicationInfo e = appCtx.getApplicationInfo();
         File safeFile = new File("/data/data/" + appCtx.getPackageName() + "/.cache/classes.dve");
         if (safeFile.exists()) {    //判断是否是加固包
             isOpt = true;

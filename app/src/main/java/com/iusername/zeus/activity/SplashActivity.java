@@ -1,11 +1,13 @@
 package com.iusername.zeus.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.iusername.base.base.ActivityBase;
+import com.iusername.base.helper.ModuleManager;
+import com.iusername.read.ReadModule;
 import com.iusername.zeus.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends ActivityBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +17,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void loadAllModule(){
-
+        ModuleManager.registerModule(new ReadModule());
     }
 }

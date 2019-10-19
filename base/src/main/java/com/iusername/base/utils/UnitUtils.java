@@ -21,4 +21,8 @@ public class UnitUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public static int getScreenWith(){
+        return displayMetrics.widthPixels;
+    }
+
 }
