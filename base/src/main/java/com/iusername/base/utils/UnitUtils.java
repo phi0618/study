@@ -4,9 +4,6 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
 public class UnitUtils {
-    private UnitUtils() {
-    }
-
     private static DisplayMetrics displayMetrics;
 
     static {
@@ -24,7 +21,7 @@ public class UnitUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static int getScreenWith() {
+    public static int getScreenWith(){
         return displayMetrics.widthPixels;
     }
 

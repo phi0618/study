@@ -65,10 +65,8 @@ public class ProtocolManager {
         for (String param : params) {
             p = param.split("=");
             try {
-                if(p.length > 1) {
-                    map.put(p[0], URLDecoder.decode(p[1], "utf-8"));
-                }
-            } catch (Exception e) {
+                map.put(p[0], URLDecoder.decode(p[1], "utf-8"));
+            } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
