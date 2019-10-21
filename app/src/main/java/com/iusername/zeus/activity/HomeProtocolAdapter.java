@@ -38,7 +38,7 @@ public class HomeProtocolAdapter extends RecyclerView.Adapter<HomeProtocolAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Map.Entry<String, String> entry = getItemEntity(position);
         viewHolder.mTitleView.setText(entry.getKey());
-        viewHolder.mTitleView.setOnClickListener(new Click2Protocol(entry.getValue()));
+        viewHolder.mTitleView.setOnClickListener(new Click2Protocol("zeus://readme?za=aa&ca"));
     }
 
     private Map.Entry<String, String> getItemEntity(int position) {
